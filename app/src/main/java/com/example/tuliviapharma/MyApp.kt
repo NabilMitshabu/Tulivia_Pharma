@@ -13,12 +13,10 @@ fun MyApp() {
 
     NavHost(navController = navController, startDestination = "Accueil") {
 
-        // Écran d'accueil avec image hexagonale
         composable("Accueil") {
             Accueil( navController)
         }
 
-        // Écran de liste des appartements
         composable("produits") {
             ProduitsMedicaux( navController)
         }
