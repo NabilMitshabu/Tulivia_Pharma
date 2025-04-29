@@ -31,21 +31,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 
 @Composable
 fun ProduitsMedicaux(navController: NavController) {
     val produits = listOf(
-        Produit("Atenolol", "20€", "Santé cardiaque", R.drawable.atenolol),
-        Produit("Bétadine", "6€", "Soins de la peau", R.drawable.betadine),
-        Produit("Insuline", "18€", "Régulation de la glycémie", R.drawable.insulina),
-        Produit("Oméprazole", "15€", "Protection gastrique", R.drawable.omeprazol),
-        Produit("Lévétiracétam", "22€", "Traitement de l'épilepsie", R.drawable.levitiracetame)
+        Produit("Atenolol", "20€", "Santé cardiaque", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.atenolol),
+        Produit("Bétadine", "6€", "Soins de la peau", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.betadine),
+        Produit("Insuline", "18€", "Régulation de la glycémie","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.insulina),
+        Produit("Oméprazole", "15€", "Protection gastrique","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.omeprazol),
+        Produit("Lévétiracétam", "22€", "Traitement de l'épilepsie","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.levitiracetame),
+        Produit("Atenolol", "20€", "Santé cardiaque", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.insulina),
+
+
     )
 
     Column(
@@ -76,7 +76,7 @@ fun ProduitsMedicaux(navController: NavController) {
         ) {
             items(produits) { produit ->
                 ProduitCard(produit) {
-                    navController.navigate("produitDetails/${produit.title}/${produit.price}/${produit.tag}/${produit.imageRes}")
+                    navController.navigate("produitDetails/${produit.title}/${produit.price}/${produit.description} /${produit.tag}/${produit.imageRes}")
                 }
                 Spacer(modifier = Modifier.height(12.dp))
             }
@@ -84,6 +84,16 @@ fun ProduitsMedicaux(navController: NavController) {
     }
 }
 
+// Modèle de données pour un produit
+data class Produit(
+    val title: String,
+    val price: String,
+    val tag: String,
+    val description: String,
+    val imageRes: Int
+)
+
+// Carte d'affichage pour un produit
 @Composable
 fun ProduitCard(produit: Produit, onClick: () -> Unit) {
     Card(
@@ -132,54 +142,16 @@ fun ProduitCard(produit: Produit, onClick: () -> Unit) {
                     color = Color(0xFF64EEA8)
                 )
             }
-        }
-    }
-}
-
-@Composable
-fun ProduitDetails(title: String, price: String, tag: String, imageRes: Int) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(16.dp)
-    ) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(16.dp)),
-            contentScale = ContentScale.Crop
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(text = tag, fontSize = 16.sp, color = Color.Gray)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = price, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF64EEA8))
-    }
-}
-
-@Composable
-fun NavGraph(navController: NavController) {
-    NavHost(navController, startDestination = "produitsMedicaux") {
-        composable("produitsMedicaux") { ProduitsMedicaux(navController) }
-        composable(
-            "produitDetails/{title}/{price}/{tag}/{imageRes}",
-            arguments = listOf(
-                navArgument("title") { type = NavType.StringType },
-                navArgument("price") { type = NavType.StringType },
-                navArgument("tag") { type = NavType.StringType },
-                navArgument("imageRes") { type = NavType.IntType }
+            IconButton( onClick = { /* Ajouter au panier */ },
+                modifier = Modifier .size(36.dp)
+                    .background(Color(0xFFE0F6EC), RoundedCornerShape(12.dp))
             )
-        ) { backStackEntry ->
-            val title = backStackEntry.arguments?.getString("title")!!
-            val price = backStackEntry.arguments?.getString("price")!!
-            val tag = backStackEntry.arguments?.getString("tag")!!
-            val imageRes = backStackEntry.arguments?.getInt("imageRes")!!
-            ProduitDetails(title, price, tag, imageRes)
+
+            {
+                Icon( imageVector = Icons.Default.ShoppingCart,
+                contentDescription = "Ajouter au panier",
+                tint = Color(0xFF45EF99) )
+            }
         }
     }
 }
