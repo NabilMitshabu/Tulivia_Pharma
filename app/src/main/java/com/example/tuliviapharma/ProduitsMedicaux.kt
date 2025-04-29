@@ -38,9 +38,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 
-
 @Composable
-fun ProduitsMedicaux( navController: NavController) {
+fun ProduitsMedicaux(navController: NavController) {
     val produits = listOf(
         Produit("Atenolol", "20€", "Santé cardiaque", R.drawable.atenolol),
         Produit("Bétadine", "6€", "Soins de la peau", R.drawable.betadine),
@@ -54,7 +53,6 @@ fun ProduitsMedicaux( navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Barre du haut avec icône de retour et titre
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
@@ -77,22 +75,17 @@ fun ProduitsMedicaux( navController: NavController) {
                 .padding(horizontal = 12.dp)
         ) {
             items(produits) { produit ->
-                ProduitCard(produit)
+                ProduitCard(produit) {
+                    navController.navigate("produitDetails/${produit.title}/${produit.price}/${produit.tag}/${produit.imageRes}")
+                }
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
 }
 
-data class Produit(
-    val title: String,
-    val price: String,
-    val tag: String,
-    val imageRes: Int
-)
-
 @Composable
-fun ProduitCard(produit: Produit) {
+fun ProduitCard(produit: Produit, onClick: () -> Unit) {
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
@@ -100,6 +93,7 @@ fun ProduitCard(produit: Produit) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier.padding(8.dp)
@@ -138,30 +132,54 @@ fun ProduitCard(produit: Produit) {
                     color = Color(0xFF64EEA8)
                 )
             }
-
-            IconButton(
-                onClick = { /* Ajouter au panier */ },
-                modifier = Modifier
-                    .size(36.dp)
-                    .background(Color(0xFFE0F6EC), RoundedCornerShape(12.dp))
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Ajouter au panier",
-                    tint = Color(0xFF45EF99)
-                )
-            }
         }
     }
 }
 
-
-
-
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    TuliviaPharmaTheme {
-        ProduitsMedicaux( navController = rememberNavController())
+fun ProduitDetails(title: String, price: String, tag: String, imageRes: Int) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(16.dp)
+    ) {
+        Image(
+            painter = painterResource(id = imageRes),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .clip(RoundedCornerShape(16.dp)),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(text = tag, fontSize = 16.sp, color = Color.Gray)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = price, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color(0xFF64EEA8))
+    }
+}
+
+@Composable
+fun NavGraph(navController: NavController) {
+    NavHost(navController, startDestination = "produitsMedicaux") {
+        composable("produitsMedicaux") { ProduitsMedicaux(navController) }
+        composable(
+            "produitDetails/{title}/{price}/{tag}/{imageRes}",
+            arguments = listOf(
+                navArgument("title") { type = NavType.StringType },
+                navArgument("price") { type = NavType.StringType },
+                navArgument("tag") { type = NavType.StringType },
+                navArgument("imageRes") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val title = backStackEntry.arguments?.getString("title")!!
+            val price = backStackEntry.arguments?.getString("price")!!
+            val tag = backStackEntry.arguments?.getString("tag")!!
+            val imageRes = backStackEntry.arguments?.getInt("imageRes")!!
+            ProduitDetails(title, price, tag, imageRes)
+        }
     }
 }
