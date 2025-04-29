@@ -1,9 +1,9 @@
 package com.example.tuliviapharma
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,21 +32,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
+import kotlin.system.exitProcess
 
 @Composable
 fun ProduitsMedicaux(navController: NavController) {
     val produits = listOf(
-        Produit("Atenolol", "20€", "Santé cardiaque", R.drawable.atenolol),
-        Produit("Bétadine", "6€", "Soins de la peau", R.drawable.betadine),
-        Produit("Insuline", "18€", "Régulation de la glycémie", R.drawable.insulina),
-        Produit("Oméprazole", "15€", "Protection gastrique", R.drawable.omeprazol),
-        Produit("Lévétiracétam", "22€", "Traitement de l'épilepsie", R.drawable.levitiracetame)
+        Produit("Atenolol", "20€", "Santé cardiaque", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.atenolol),
+        Produit("Bétadine", "6€", "Soins de la peau", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.betadine),
+        Produit("Insuline", "18€", "Régulation de la glycémie","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.insulina),
+        Produit("Oméprazole", "15€", "Protection gastrique","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.omeprazol),
+        Produit("Lévétiracétam", "22€", "Traitement de l'épilepsie","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", R.drawable.levitiracetame),
+        Produit("Atenolol", "20€", "Santé cardiaque", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",R.drawable.insulina),
+
+
     )
 
     Column(
@@ -56,58 +55,20 @@ fun ProduitsMedicaux(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // TopBar
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Bouton retour
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
+            Icon(
+                Icons.Default.ArrowBack,
+                contentDescription = "Retour",
+                tint = Color(0xFF14E37E),
                 modifier = Modifier.clickable { navController.navigate("Accueil") }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBackIosNew,
-                    contentDescription = "Retour",
-                    tint = Color(0xFF14E37E)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                Text(
-                    "Retour",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-            }
-
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Panier",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable { navController.navigate("Panier") }
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Connexion",
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clickable { navController.navigate("Login") }
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-
-            }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Retour", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
         }
 
         LazyColumn(
@@ -116,23 +77,30 @@ fun ProduitsMedicaux(navController: NavController) {
                 .padding(horizontal = 12.dp)
         ) {
             items(produits) { produit ->
-                ProduitCard(produit)
+                ProduitCard(produit) {
+                    navController.navigate("produitDetails/${produit.title}/${produit.price}/${produit.description} /${produit.tag}/${produit.imageRes}")
+                }
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
 }
 
-
+// Modèle de données pour un produit
 data class Produit(
     val title: String,
     val price: String,
     val tag: String,
+    val description: String,
     val imageRes: Int
 )
 
+// Carte d'affichage pour un produit
 @Composable
-fun ProduitCard(produit: Produit) {
+fun ProduitCard(produit: Produit, onClick: () -> Unit) {
+    BackHandler {
+        exitProcess(0)
+    }
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
@@ -140,6 +108,7 @@ fun ProduitCard(produit: Produit) {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier.padding(8.dp)
@@ -178,30 +147,16 @@ fun ProduitCard(produit: Produit) {
                     color = Color(0xFF64EEA8)
                 )
             }
-
-            IconButton(
-                onClick = { /* Ajouter au panier */ },
-                modifier = Modifier
-                    .size(36.dp)
+            IconButton( onClick = { /* Ajouter au panier */ },
+                modifier = Modifier .size(36.dp)
                     .background(Color(0xFFE0F6EC), RoundedCornerShape(12.dp))
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Ajouter au panier",
-                    tint = Color(0xFF45EF99)
-                )
+            )
+
+            {
+                Icon( imageVector = Icons.Default.ShoppingCart,
+                contentDescription = "Ajouter au panier",
+                tint = Color(0xFF45EF99) )
             }
         }
-    }
-}
-
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TuliviaPharmaTheme {
-        ProduitsMedicaux( navController = rememberNavController())
     }
 }
