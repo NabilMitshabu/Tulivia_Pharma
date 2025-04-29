@@ -109,7 +109,7 @@ fun ProduitsMedicaux(navController: NavController) {
                     tint = Color.Black,
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable { /* Naviguer vers l'écran de connexion */ }
+                        .clickable { navController.navigate("Connexion") }
                 )
 
 
