@@ -1,5 +1,6 @@
 package com.example.tuliviapharma
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -44,12 +45,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun Accueil( navController: NavController) {
     val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
+
+    BackHandler {
+        exitProcess(0)
+    }
 
     Box(
         modifier = Modifier

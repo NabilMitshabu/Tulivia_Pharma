@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             TuliviaPharmaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                         padding ->
-                    // On passe les paddings si nécessaire
+
                     Box(modifier = Modifier.padding(padding)) {
                         MyApp()
                     }
