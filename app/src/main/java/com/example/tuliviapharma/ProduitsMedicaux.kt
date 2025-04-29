@@ -1,5 +1,6 @@
 package com.example.tuliviapharma
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import kotlin.system.exitProcess
 
 @Composable
 fun ProduitsMedicaux(navController: NavController) {
@@ -96,6 +98,9 @@ data class Produit(
 // Carte d'affichage pour un produit
 @Composable
 fun ProduitCard(produit: Produit, onClick: () -> Unit) {
+    BackHandler {
+        exitProcess(0)
+    }
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
