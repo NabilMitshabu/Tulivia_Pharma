@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -32,9 +34,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 import kotlin.system.exitProcess
 
 @Composable
@@ -55,21 +60,54 @@ fun ProduitsMedicaux(navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Icon(
-                Icons.Default.ArrowBack,
-                contentDescription = "Retour",
-                tint = Color(0xFF14E37E),
-                modifier = Modifier.clickable { navController.navigate("Accueil") }
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Retour", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+
+        Row {
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Icon(
+                    Icons.Default.ArrowBackIosNew,
+                    contentDescription = "Retour",
+                    tint = Color(0xFF14E37E),
+                    modifier = Modifier.clickable { navController.navigate("Accueil") }
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Retour", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+
+                Spacer(modifier = Modifier.weight(2f))
+
+
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Panier",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { /* Naviguer vers le panier */ }
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Connexion",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { /* Naviguer vers l'écran de connexion */ }
+                )
+
+
+            }
+
+
+
+
         }
+        Spacer(modifier = Modifier.height(8.dp))
+
 
         LazyColumn(
             modifier = Modifier
@@ -158,5 +196,14 @@ fun ProduitCard(produit: Produit, onClick: () -> Unit) {
                 tint = Color(0xFF45EF99) )
             }
         }
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun Greetingp() {
+    TuliviaPharmaTheme {
+        ProduitsMedicaux(navController = rememberNavController())
     }
 }
