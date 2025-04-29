@@ -3,6 +3,7 @@ package com.example.tuliviapharma
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,9 +41,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 
-
 @Composable
-fun ProduitsMedicaux( navController: NavController) {
+fun ProduitsMedicaux(navController: NavController) {
     val produits = listOf(
         Produit("Atenolol", "20€", "Santé cardiaque", R.drawable.atenolol),
         Produit("Bétadine", "6€", "Soins de la peau", R.drawable.betadine),
@@ -54,21 +56,58 @@ fun ProduitsMedicaux( navController: NavController) {
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // Barre du haut avec icône de retour et titre
+        // TopBar
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Icon(
-                Icons.Default.ArrowBack,
-                contentDescription = "Retour",
-                tint = Color(0xFF14E37E),
+            // Bouton retour
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.clickable { navController.navigate("Accueil") }
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Retour", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBackIosNew,
+                    contentDescription = "Retour",
+                    tint = Color(0xFF14E37E)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    "Retour",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            }
+
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Panier",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { navController.navigate("Panier") }
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = "Connexion",
+                    tint = Color.Black,
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clickable { navController.navigate("Login") }
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+
+            }
         }
 
         LazyColumn(
@@ -83,6 +122,7 @@ fun ProduitsMedicaux( navController: NavController) {
         }
     }
 }
+
 
 data class Produit(
     val title: String,
