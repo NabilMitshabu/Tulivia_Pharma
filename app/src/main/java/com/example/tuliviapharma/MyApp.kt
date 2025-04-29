@@ -43,5 +43,9 @@ fun MyApp() {
             val description = backStackEntry.arguments?.getString("description")!!
             ProduitDetails(title, price, tag, imageRes, description,navController)
         }
+        // Écran de connexion
+        composable("Connexion") {
+            Connexion( navController)
+        }
     }
 }

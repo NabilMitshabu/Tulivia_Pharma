@@ -96,7 +96,7 @@ fun ProduitsMedicaux(navController: NavController) {
                     tint = Color.Black,
                     modifier = Modifier
                         .size(28.dp)
-                        .clickable { /* Naviguer vers l'écran de connexion */ }
+                        .clickable { navController.navigate("Connexion") }
                 )
 
 
@@ -136,9 +136,7 @@ data class Produit(
 // Carte d'affichage pour un produit
 @Composable
 fun ProduitCard(produit: Produit, onClick: () -> Unit) {
-    BackHandler {
-        exitProcess(0)
-    }
+
     Card(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp),
