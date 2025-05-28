@@ -1,6 +1,8 @@
 package com.example.tuliviapharma
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,8 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -38,137 +45,152 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.tuliviapharma.composant.PasswordFieldWithIcon
+import com.example.tuliviapharma.composant.TextFieldWithIcon
 import com.example.tuliviapharma.ui.theme.TuliviaPharmaTheme
 
 
-
 @Composable
-fun Connexion( navController: androidx.navigation.NavController) {
-    var username by remember { mutableStateOf("") }
+fun Connexion(navController: androidx.navigation.NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF0F5F2))
+            .background(Color(0xFFFFF5FC)) // Fond rose pâle
     ) {
-        // Partie supérieure
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
-                .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)) // CLIP D'ABORD
-                .background(Color(0xFF96F6C8))
-        )
-        {
-            Text(
-                text = "WELCOME",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.align(Alignment.Center)
-            )
+                .height(220.dp)
+                .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
+                .background(Color(0xFF00CDBD)),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Spacer(modifier = Modifier.height(40.dp))
+                Text("Sign In", color = Color.White)
+
+                Spacer(modifier = Modifier.height(24.dp))
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape)
+                        .background(Color.White),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "Via Pharma",
+                        color = Color(0xFF00CDBD),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
 
-        // Partie inférieure
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 32.dp)
-                .padding(top = 280.dp),
+                .padding(horizontal = 24.dp)
+                .padding(top = 260.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Carte contenant le formulaire
-            Card(
+
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Champ Email
+            TextFieldWithIcon(
+                label = "Entrer Email",
+                icon = { Icon(Icons.Filled.Email, contentDescription = null) },
+                value = email,
+                onValueChange = { email = it }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Mot de passe
+            PasswordFieldWithIcon(
+                value = password,
+                onValueChange = { password = it }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Bouton Sing Up
+            Button(
+                onClick = { },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                    .height(50.dp),
+                shape = RoundedCornerShape(25.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00CDBD))
             ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    OutlinedTextField(
-                        value = username,
-                        onValueChange = { username = it },
-                        label = { Text("Nom d'utilisateur") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                Text("Sing Up", color = Color.White)
+            }
 
-                    )
+            Spacer(modifier = Modifier.height(12.dp))
 
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        label = { Text("Email") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        label = { Text("Mot de passe") },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth(),
-                        visualTransformation = PasswordVisualTransformation()
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Button(
-                        onClick = { /* Inscription */ },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF96F6C8))
-                    ) {
-                        Text("S'inscrire", color = Color.White)
-                    }
-                }
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text("Don't have account ?")
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    "Sign Up",
+                    color = Color(0xFF00CDBD),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable { }
+                )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Text(
-                text = "OU CONNECTEZ-VOUS AVEC",
-                color = Color.Black.copy(alpha = 0.7f),
-                fontSize = 12.sp
-            )
+            Text("Or sign in with")
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.size(150.dp))
 
-            // Boutons sociaux
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                IconButton(onClick = { /* Connexion Google */ }) {
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                    border = BorderStroke(1.dp, Color.Gray),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp)
+                ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_google1),
+                        painter = painterResource(id = R.drawable.ic_gmail),
                         contentDescription = "Google",
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(40.dp)
-
+                        tint = Color.Unspecified
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Google")
                 }
-                IconButton(onClick = { /* Connexion Facebook */ }) {
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Button(
+                    onClick = { },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1877F2)),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp)
+                ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_gmail1_removebg_preview),
-                        contentDescription = "Gmail",
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(40.dp)
+                        painter = painterResource(id = R.drawable.ic_facebook),
+                        contentDescription = "Facebook",
+                        tint = Color.White
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Facebook", color = Color.White)
                 }
             }
         }
@@ -178,11 +200,10 @@ fun Connexion( navController: androidx.navigation.NavController) {
 
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingConnexion() {
     TuliviaPharmaTheme {
-        Connexion( navController = rememberNavController())
+        Connexion( navController = rememberNavController() )
     }
 }
